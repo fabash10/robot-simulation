@@ -139,7 +139,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void simulationPeriodic() {
-        elevatorLigament.setLength(elevator.getHeight().in(Meters));
-        armLigament.setAngle(arm.getAngle().in(Degrees) - 90);
+        elevatorLigament.setLength(elevator.getSimulationHeight().in(Meters));
+        armLigament.setAngle(arm.getSimulationAngle().in(Degrees) - 90);
     }
 }

@@ -42,9 +42,8 @@ public class ArmSimulationBase extends SubsystemBase {
         encoder.getConfigurator().apply(ArmConfig.encoderConfig);
     }
 
-    // This method must be exposed so that the simulation code in Robot always compiles
-    public Angle getAngle() {
-        throw new UnsupportedOperationException("getAngle() must be implemented in ArmSubsystem");
+    public Angle getSimulationAngle() {
+        return encoder.getPosition().getValue();
     }
 
     @Override

@@ -37,10 +37,11 @@ public class ElevatorSimulationBase extends SubsystemBase {
         motorSim.Orientation = ChassisReference.Clockwise_Positive;
     }
 
-    // This method must be exposed so that the simulation code in Robot always compiles
-    public Distance getHeight() {
-        throw new UnsupportedOperationException(
-                "getHeight() must be implemented in ElevatorSubsystem");
+    public Distance getSimulationHeight() {
+        return ElevatorConst.MIN_HEIGHT.plus(
+                ElevatorConst.MAX_HEIGHT
+                        .minus(ElevatorConst.MIN_HEIGHT)
+                        .times(motor.getPosition().getValueAsDouble())); // Simple linear interpolation
     }
 
     @Override

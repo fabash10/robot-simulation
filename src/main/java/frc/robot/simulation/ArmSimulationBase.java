@@ -8,6 +8,7 @@ import static edu.wpi.first.units.Units.Volts;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.sim.CANcoderSimState;
+import com.ctre.phoenix6.sim.ChassisReference;
 import com.ctre.phoenix6.sim.TalonFXSimState;
 
 import edu.wpi.first.math.system.plant.DCMotor;
@@ -16,7 +17,6 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import frc.robot.arm.ArmConfig;
 import frc.robot.arm.ArmConst;
 
 /** Class that adds simulation capabilities to the arm subsystem internally */
@@ -38,8 +38,7 @@ public class ArmSimulationBase extends SubsystemBase {
                     ArmConst.MAX_ANGLE.in(Radians));
 
     protected ArmSimulationBase() {
-        motor.getConfigurator().apply(ArmConfig.motorConfig);
-        encoder.getConfigurator().apply(ArmConfig.encoderConfig);
+        motorSim.Orientation = ChassisReference.CounterClockwise_Positive;
     }
 
     public Angle getSimulationAngle() {

@@ -31,12 +31,13 @@ import frc.robot.arm.ArmConst;
 import frc.robot.drivetrain.CommandSwerveDrivetrain;
 import frc.robot.drivetrain.TunerConstants;
 import frc.robot.elevator.ElevatorConst;
+import frc.robot.elevator.ElevatorSubsystem;
 import frc.robot.simulation.ArmSimulation;
 import frc.robot.simulation.ElevatorSimulation;
 
 public class Robot extends TimedRobot {
     private final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
-
+    private final ElevatorSubsystem elevator = new ElevatorSubsystem();
     private final CommandXboxController controller = new CommandXboxController(0);
 
     private final Field2d field = new Field2d();
@@ -52,6 +53,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putData("Field", field);
         posePublisher.set(Pose2d.kZero);
         SmartDashboard.putData("Mechanism", mechanism);
+        SmartDashboard.putData("Elevator", elevator);
     }
 
     private void initBindings() {
@@ -71,6 +73,8 @@ public class Robot extends TimedRobot {
                                         .withVelocityY(controller.getLeftX() * speed)
                                         .withRotationalRate(
                                                 controller.getRightX() * angularSpeed)));
+        controller.y().onTrue(elevator.runOnce(() -> elevator.moveHeightFraction(1.0)));
+        controller.a().onTrue(elevator.runOnce(() -> elevator.moveHeightFraction(0.0)));
     }
 
     public Pose2d getPose() {

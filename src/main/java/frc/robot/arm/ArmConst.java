@@ -12,10 +12,11 @@ public final class ArmConst {
     public static final int MOTOR_ID = 16;
     public static final int ENCODER_ID = 57;
 
-    public static final Angle MIN_ANGLE = Degrees.of(-90.0);
+    public static final Angle MIN_ANGLE = Degrees.of(0.0);
     public static final Angle MAX_ANGLE = Degrees.of(90.0);
 
     public static final double GEARING = 45.0;
     public static final MomentOfInertia MOMENT = KilogramSquareMeters.of(0.8); // Estimate
     public static final Distance LENGTH = Meters.of(0.64);
+    
 }

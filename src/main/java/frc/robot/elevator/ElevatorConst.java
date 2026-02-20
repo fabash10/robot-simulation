@@ -14,4 +14,5 @@ public final class ElevatorConst {
 
     /** Amount of rotor turning when going from min height to max height (0% to 100%) */
     public static final Angle ROTOR_TO_MECHANISM_RATIO = Rotations.of(135.0);
+    
 }

@@ -26,8 +26,8 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-
 import frc.robot.arm.ArmConst;
+import frc.robot.arm.ArmSubsystem;
 import frc.robot.drivetrain.CommandSwerveDrivetrain;
 import frc.robot.drivetrain.TunerConstants;
 import frc.robot.elevator.ElevatorConst;
@@ -38,6 +38,7 @@ import frc.robot.simulation.ElevatorSimulation;
 public class Robot extends TimedRobot {
     private final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     private final ElevatorSubsystem elevator = new ElevatorSubsystem();
+    private final ArmSubsystem arm = new ArmSubsystem();
     private final CommandXboxController controller = new CommandXboxController(0);
 
     private final Field2d field = new Field2d();
@@ -54,6 +55,7 @@ public class Robot extends TimedRobot {
         posePublisher.set(Pose2d.kZero);
         SmartDashboard.putData("Mechanism", mechanism);
         SmartDashboard.putData("Elevator", elevator);
+        SmartDashboard.putData("Arm", arm);
     }
 
     private void initBindings() {
@@ -73,8 +75,12 @@ public class Robot extends TimedRobot {
                                         .withVelocityY(controller.getLeftX() * speed)
                                         .withRotationalRate(
                                                 controller.getRightX() * angularSpeed)));
+        // elevator bindings                                     
         controller.y().onTrue(elevator.runOnce(() -> elevator.moveHeightFraction(1.0)));
         controller.a().onTrue(elevator.runOnce(() -> elevator.moveHeightFraction(0.0)));
+        // arm bindings
+        controller.x().onTrue(arm.runOnce( ()-> arm.moveAngle(ArmConst.MAX_ANGLE)));   
+        controller.b().onTrue(arm.runOnce( ()-> arm.moveAngle(ArmConst.MIN_ANGLE)));        
     }
 
     public Pose2d getPose() {
